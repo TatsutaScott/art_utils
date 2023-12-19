@@ -34,3 +34,10 @@ export const map = (n, inputLo, inputHi, outputLo, outputHi) => {
   const outScale = outputHi - outputLo; // calculates the size of the output range
   return inScale * outScale + outputLo; // multiplies the input ratio by the size of the output range
 };
+
+export const interp = (ratio, start, end) => {
+  return map(ratio, 0, 1, start, end);
+};
+
+export const sin = (theta) => Math.sin(theta);
+export const cos = (theta) => Math.cos(theta);

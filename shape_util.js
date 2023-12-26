@@ -1,5 +1,6 @@
 import { TAU, sin, cos } from "./math_util.js";
 import { interp } from "./math_util.js";
+
 /**
  * Draws a line.
  *
@@ -17,14 +18,24 @@ function line(x1, y1, x2, y2, context) {
   context.stroke(); // Color in the stroke
 }
 
+/**
+ * Generates an ellipse shaped path
+ * @param {Number} x - x position
+ * @param {Number} y - y position
+ * @param {Number} w - width 
+ * @param {Number} h - height
+ * @param {Number} r - radius
+ * @returns {Path2D} - path object representing an ellipse
+ */
+
 function ellipse(x, y, w, h, r = 0) {
-  const path = new Path2D();
-  path.ellipse(x, y, w, h, r, 0, TAU);
+  const path = new Path2D(); // inits the path object 
+  path.ellipse(x, y, w, h, r, 0, TAU); // adds an ellipse to the path
   return path;
 }
 
 /**
- * Draws a star
+ * Generates a star shaped path
  * @param {Number} x - x position
  * @param {Number} y - y position
  * @param {Number} w - width
@@ -33,7 +44,7 @@ function ellipse(x, y, w, h, r = 0) {
  * @param {Number} o - offset between outer point and inner angle
  * @param {Number} i_curv - inner curve (0 is a point)
  * @param {Number} o_curv - outer curve (1 is a point)
- * @returns
+ * @returns {Path2D} - path object representing a star
  */
 function star(x, y, w, h, points, o = 0.5, i_curv = 0, o_curv = 1) {
   const angle_step = TAU / points; // angle step size for each point of the star
@@ -77,4 +88,5 @@ function star(x, y, w, h, points, o = 0.5, i_curv = 0, o_curv = 1) {
   }
   return path;
 }
+
 export { line, star, ellipse };

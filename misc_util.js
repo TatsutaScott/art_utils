@@ -1,5 +1,4 @@
 /**Creates a string with the current date and time. Useful for naming downloads to keep track of time
- *
  * @returns {String} - String with date "Year.Month.Day_Hour.Minute"
  */
 export function dateString() {

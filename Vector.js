@@ -1,5 +1,5 @@
 /** Class representing a 2 dimensional vector */
-class Vec {
+class Vector {
   /** Make a new Vector
    * @param {number} x - the x coordinate of the vector
    * @param {number} y - the y coordinate of the vector
@@ -12,13 +12,13 @@ class Vec {
   /**
    * @static generates a vector with a random angle and given length
    * @param {number} length - the length of the vector (Default: 1)
-   * @returns {Vec}
+   * @returns {Vector}
    */
   static random(length = 1) {
     const theta = Math.random() * Math.PI * 2; // picks a random number between 0 and 2π
     const x = length * Math.cos(theta); // find the x value using the cosine of theta and scale by length
     const y = length * Math.sin(theta); // find the y value using the sine of theta and scale by length
-    return new Vec(x, y);
+    return new Vector(x, y);
   }
 
   /**
@@ -29,65 +29,65 @@ class Vec {
   static fromAngle(theta) {
     const x = Math.cos(theta); // find the x value using the cosine of theta
     const y = Math.sin(theta); // find the y value using the sine of theta
-    return new Vec(x, y);
+    return new Vector(x, y);
   }
 
   /**
    * @static gives the distance between two points/vectors
-   * @param {Vec} vector1 - first vector
-   * @param {Vec} vector2 - second vector
-   * @returns {number}  distance between the two vectors
+   * @param {Vector} vector1 - first vector
+   * @param {Vector} vector2 - second vector
+   * @returns {Vector}  distance between the two vectors
    */
   static distance(vector1, vector2) {
-    const differenceVector = Vec.sub(vector2, vector1); // subtracts one from the other to find vector between the two
+    const differenceVector = Vector.sub(vector2, vector1); // subtracts one from the other to find vector between the two
     const distance = differenceVector.magnitude(); // calculates magnitude of the difference vector
     return distance;
   }
 
   /**
    * @static adds together two vectors and returns their sum as a vector
-   * @param {Vec} vector1 - First vector
-   * @param {Vec} vector2 - second vector
-   * @returns {Vec}
+   * @param {Vector} vector1 - First vector
+   * @param {Vector} vector2 - second vector
+   * @returns {Vector}
    */
   static add(vector1, vector2) {
     const x = vector1.x + vector2.x; // combine the x values
     const y = vector1.y + vector2.y; // combine the y values
-    return new Vec(x, y);
+    return new Vector(x, y);
   }
 
   /**
    * @static subtracts one vector from another and returns the output as a vector
-   * @param {Vec} vector1 - first vector
-   * @param {Vec} vector2 - second vector
-   * @returns {Vec}
+   * @param {Vector} vector1 - first vector
+   * @param {Vector} vector2 - second vector
+   * @returns {Vector}
    */
   static sub(vector1, vector2) {
     const x = vector1.x - vector2.x; //subtract x values
     const y = vector1.y - vector2.y; // subtract y values
-    return new Vec(x, y);
+    return new Vector(x, y);
   }
 
   /**
    * @static generates a vector that is created by linearly interpolating between two vectors. (0 is vector 1 and 1 is vector 2)
-   * @param {Vec} vector1 - first vector
-   * @param {Vec} vector2 - second vector
+   * @param {Vector} vector1 - first vector
+   * @param {Vector} vector2 - second vector
    * @param {number} interpVal - amount of interpolation
-   * @returns {Vec}
+   * @returns {Vector}
    */
   static interpolate(vector1, vector2, interpVal) {
     const x = map(interpVal, 0, 1, vector1.x, vector2.x); // uses the map function to interpolate x value
     const y = map(interpVal, 0, 1, vector1.y, vector2.y); // uses the map function to interpolate y value
-    return new Vec(x, y);
+    return new Vector(x, y);
   }
 
   /**
    * @static calculates the point at which 2 lines intersect. lines are defined in the arguments as two pairs of vectors.
-   * @param {Vec} v1 - first vector in the first line
-   * @param {Vec} v2 - second vector in the first line
-   * @param {Vec} v3 - first vector in the second line
-   * @param {Vec} v4 - second vector in the second line
-   * @returns {Vec} vector representing the point of intersection between the two vectors
+   * @param {Vector} v1 - first vector in the first line
+   * @param {Vector} v2 - second vector in the first line
+   * @param {Vector} v3 - first vector in the second line
+   * @param {Vector} v4 - second vector in the second line
+   * @returns {Vector} vector representing the point of intersection between the two vectors
    */
 
   static findIntersection(v1, v2, v3, v4) {
@@ -121,16 +121,16 @@ class Vec {
     const x = v1.x + ua * (v2.x - v1.x);
     const y = v1.y + ua * (v2.y - v1.y);
 
-    return Vec(x, y);
+    return Vector(x, y);
   }
 }
 
 /**
  * Makes a copy of the vector
- * @returns {Vec}
+ * @returns {Vector}
  */
-Vec.prototype.copy = function () {
-  return new Vec(this.x, this.y); // make a new vector with the x and y coordinates of the current vec
+Vector.prototype.copy = function () {
+  return new Vector(this.x, this.y); // make a new vector with the x and y coordinates of the current vec
 };
 
 /**
@@ -138,7 +138,7 @@ Vec.prototype.copy = function () {
  * @param {number} theta - angle to rotate by (in radians)
  * @returns {this}
  */
-Vec.prototype.rotate = function (theta) {
+Vector.prototype.rotate = function (theta) {
   const newHeading = this.heading() + theta; // gets the current angle and offsets it by theta
   const magnitude = this.magnitude(); // gets the current magnitude of the vector
   this.x = Math.cos(newHeading) * magnitude; // generates new angle's x and scales by vector's magnitude
@@ -150,17 +150,17 @@ Vec.prototype.rotate = function (theta) {
  * Calculates the angle of the vector
  * @returns {number} the angle that the vector points
  */
-Vec.prototype.heading = function () {
+Vector.prototype.heading = function () {
   return Math.atan2(this.y, this.x); // calculates the heading by taking the arctangent of x and y
 };
 
 /**
  * Adds a vector to the vector calling the method. Accepts either 1 vector argument, or 2 number arguments that serve as a vector.
- * @param {Vec | number} a - either a vector or the x value of a vector to be added
+ * @param {Vector | number} a - either a vector or the x value of a vector to be added
  * @param {number} b - y value of a vector to be added
  * @returns {this}
  */
-Vec.prototype.add = function (a, b) {
+Vector.prototype.add = function (a, b) {
   if (arguments.length === 1 && typeof a === "object") {
     // if there is only one argument then run with a as a vector
     this.x += a.x; // add on the x value
@@ -178,11 +178,11 @@ Vec.prototype.add = function (a, b) {
 
 /**
  * Subtracts a vector for the vector calling the method. Accepts either 1 vector argument, or 2 number arguments that serve as a vector.
- * @param {Vec | number} a - either a vector or the x value of a vector to be subtracted
+ * @param {Vector | number} a - either a vector or the x value of a vector to be subtracted
  * @param {number} b - y value of a vector to be subtracted
- * @returns {Vec}
+ * @returns {Vector}
  */
-Vec.prototype.sub = function (a, b) {
+Vector.prototype.sub = function (a, b) {
   if (arguments.length === 1 && typeof a === "object") {
     // if there is only one argument then run with a as a vector
     this.x -= a.x; // subtract x value
@@ -200,11 +200,11 @@ Vec.prototype.sub = function (a, b) {
 
 /**
  * Multiplies the vector calling the method by another vector. Accepts either 1 vector argument, or 2 number arguments that serve as a vector.
- * @param {Vec | number} a - either a vector or the x value of a vector to multiply by
+ * @param {Vector | number} a - either a vector or the x value of a vector to multiply by
  * @param {number} b - y value of a vector to multiply by
- * @returns {Vec}
+ * @returns {Vector}
  */
-Vec.prototype.mult = function (a, b) {
+Vector.prototype.mult = function (a, b) {
   if (arguments.length === 1 && typeof a === "object") {
     // if there is only one argument then run with a as a vector
     this.x *= a.x; // multiply x values
@@ -219,7 +219,7 @@ Vec.prototype.mult = function (a, b) {
     this.y *= b; // multiply y values
   } else {
     // throw an error if the arguments don't match the expected arguments
-    throw new Error("Vec.mult arguments error");
+    throw new Error("Vector.mult arguments error");
   }
   return this;
 };
@@ -229,7 +229,7 @@ Vec.prototype.mult = function (a, b) {
  * @param {number} n - scaler value to divide Vector by
  * @returns {this}
  */
-Vec.prototype.div = function (n) {
+Vector.prototype.div = function (n) {
   this.x /= n; // divide x value
   this.y /= n; // divide y value
   return this;
@@ -237,11 +237,11 @@ Vec.prototype.div = function (n) {
 
 /**
  * Sets the current vector to the incoming vector. Accepts either 1 vector argument, or 2 number arguments that serve as a vector.
- * @param {Vec | number} a - either a vector or the x value of a vector to be set
+ * @param {Vector | number} a - either a vector or the x value of a vector to be set
  * @param {number} b - y value of a vector to be set
- * @returns {Vec}
+ * @returns {Vector}
  */
-Vec.prototype.set = function (a, b) {
+Vector.prototype.set = function (a, b) {
   if (arguments.length === 1 && typeof a === "object") {
     // if there is only one argument then run with a as a vector
     this.x = a.x; // set x value
@@ -252,7 +252,7 @@ Vec.prototype.set = function (a, b) {
     this.y = b; // set y value
   } else {
     // throw an error if the arguments don't match the expected arguments
-    throw new Error("Vec.set arguments error");
+    throw new Error("Vector.set arguments error");
   }
   return this;
 };
@@ -261,7 +261,7 @@ Vec.prototype.set = function (a, b) {
  * Calculates the magnitude or langth of a vector.
  * @returns {number}
  */
-Vec.prototype.magnitude = function () {
+Vector.prototype.magnitude = function () {
   return Math.sqrt(this.magSq()); // uses the quake magsq method to calculate magnitude
 };
 
@@ -270,7 +270,7 @@ Vec.prototype.magnitude = function () {
  * @param {number} mag - the length to set the magnitude of the vector to
  * @returns {this}
  */
-Vec.prototype.setMag = function (mag) {
+Vector.prototype.setMag = function (mag) {
   return this.normalize().mult(mag); // normalizes and then multiplies to scale
 };
 
@@ -278,7 +278,7 @@ Vec.prototype.setMag = function (mag) {
  * Normalizes the vector so that the magnitude is 1.
  * @returns {this}
  */
-Vec.prototype.normalize = function () {
+Vector.prototype.normalize = function () {
   return this.limit(1); // limit the magnitude of the vector to 1
 };
 
@@ -286,7 +286,7 @@ Vec.prototype.normalize = function () {
  * Calculate the magnitude squared of the vector
  * @returns {number}
  */
-Vec.prototype.magSq = function () {
+Vector.prototype.magSq = function () {
   return this.x * this.x + this.y * this.y; // squared magnitude
 };
 
@@ -295,7 +295,7 @@ Vec.prototype.magSq = function () {
  * @param {number} mag - magnitude to limit the vector to
  * @returns {this}
  */
-Vec.prototype.limit = function (mag) {
+Vector.prototype.limit = function (mag) {
   const mSq = this.magSq(); // calculate the mag squared
   if (mSq > mag * mag) {
     // if the mag square of the vector is larger than that of the input magnitude limit
@@ -320,4 +320,4 @@ const map = (n, inputLo, inputHi, outputLo, outputHi) => {
   return inScale * outScale + outputLo; // multiplies the input ratio by the size of the output range
 };
 
-export default Vec;
+export default Vector;

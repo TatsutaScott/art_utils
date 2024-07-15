@@ -27,8 +27,8 @@ export function makeCanvas(width, height, parent = document.body) {
  */
 export function download(canvas, name, type = "png") {
   const link = document.createElement("a");
-  link.download = name;
-  link.href = canvas.toDataURL(`image/${type}.${type}`);
+  link.download = name + "." + type;
+  link.href = canvas.toDataURL(`image/${type}`);
   link.click();
 }
 

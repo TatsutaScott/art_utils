@@ -2,19 +2,19 @@ import { createDevice, TimeNow, MessageEvent } from "@rnbo/js";
 
 class RNBO_device {
   constructor() {
-    const WAContext = window.AudioContext || window.webkitAudioContext; // this is what the audio will play though
+    const WAContext = window.AudioContext || window.webkitAudioContext; // this is what the audio will play through
     this.context = new WAContext();
-    this.gainNode = new GainNode(context);
-    gainNode.connect(context.destination);
-    gainNode.gain.value = 0;
+    this.gainNode = new GainNode(this.context);
+    this.gainNode.connect(this.context.destination);
+    this.gainNode.gain.value = 0;
   }
 
   async init(patcher, dependencies) {
     this.device = await createDevice({ context: this.context, patcher });
     this.device.node.connect(this.context.destination);
 
+    // Load the dependencies into the device
     if (dependencies) {
-      // Load the dependencies into the device
       const results = await this.device.loadDataBufferDependencies(
         dependencies
       );
@@ -28,6 +28,8 @@ class RNBO_device {
         }
       });
     }
+
+    document.addEventListener("click", () => this.context.resume());
   }
 
   sendMessage(tag, message) {

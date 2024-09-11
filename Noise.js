@@ -12,7 +12,7 @@ const PERLIN_SIZE = 4095;
 let perlin_octaves = 4; // default to medium smooth
 let perlin_amp_falloff = 0.5; // 50% reduction/octave
 
-const scaled_cosine = i => 0.5 * (1 - Math.cos(i * Math.PI));
+const scaled_cosine = (i) => 0.5 * (1 - Math.cos(i * Math.PI));
 
 let perlin; // will be initialized lazily by noise() or noiseSeed()
 
@@ -28,28 +28,28 @@ let perlin; // will be initialized lazily by noise() or noiseSeed()
  */
 
 export function noise(x, y = 0, z = 0) {
-  // if there's no perlin Array instantiate a new one 
-  if (!perlin) { 
+  // if there's no perlin Array instantiate a new one
+  if (!perlin) {
     perlin = new Array(PERLIN_SIZE + 1);
     for (let i = 0; i < PERLIN_SIZE + 1; i++) {
       perlin[i] = Math.random();
     }
   }
 
-  // make sure coordinate values are positive 
-  x = Math.abs(x); 
-  y = Math.abs(y); 
+  // make sure coordinate values are positive
+  x = Math.abs(x);
+  y = Math.abs(y);
   z = Math.abs(z);
 
   // find the integer component of the coordinates
-  let xi = Math.floor(x), 
-      yi = Math.floor(y),
-      zi = Math.floor(z);
+  let xi = Math.floor(x),
+    yi = Math.floor(y),
+    zi = Math.floor(z);
 
-  // find the leftover fractional component of the coordinates 
-  let xf = x - xi, 
-      yf = y - yi,
-      zf = z - zi;
+  // find the leftover fractional component of the coordinates
+  let xf = x - xi,
+    yf = y - yi,
+    zf = z - zi;
 
   let rxf, ryf;
 
@@ -102,7 +102,7 @@ export function noise(x, y = 0, z = 0) {
     }
   }
   return r;
-};
+}
 
 /**
  * Adjusts the character of the noise produced by the noise() function.
@@ -129,7 +129,7 @@ export function noise(x, y = 0, z = 0) {
 export function noiseDetail(lod, falloff) {
   if (lod > 0) perlin_octaves = lod;
   if (falloff > 0) perlin_amp_falloff = falloff;
-};
+}
 
 /**
  * Sets the seed value for noise(). By default, noise()</a> produces different results each time
@@ -166,7 +166,7 @@ export function noiseSeed(seed) {
         // return a float in [0, 1)
         // if z = m then z / m = 0 therefore (z % m) / m < 1 always
         return z / m;
-      }
+      },
     };
   })();
 
@@ -175,5 +175,4 @@ export function noiseSeed(seed) {
   for (let i = 0; i < PERLIN_SIZE + 1; i++) {
     perlin[i] = lcg.rand();
   }
-};
-
+}

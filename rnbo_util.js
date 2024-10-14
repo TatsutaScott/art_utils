@@ -41,6 +41,25 @@ class RNBO_device {
     const p = this.device.parametersById.get(param);
     p.value = value;
   }
+
+  getInput() {
+    const handle = (stream) => {
+      const input = this.context.createMediaStreamSource(stream);
+      input.connect(this.device.node);
+      this.mic = stream.getAudioTracks()[0];
+    };
+
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then(handle)
+      .catch(function (err) {
+        console.error("Error accessing the microphone: ", err);
+      });
+  }
+
+  muteInput() {
+    this.mic.stop();
+  }
 }
 
 export default RNBO_device;

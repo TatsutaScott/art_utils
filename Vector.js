@@ -69,6 +69,24 @@ class Vector {
   }
 
   /**
+   * @static multiplys 2 vectors or 1 vector and a number without modifying the inputs
+   * @param {Vector} vector1 - first vector
+   * @param {Vector | number} b - second vector or number
+   * @returns
+   */
+  static mult(vector1, b) {
+    if (typeof vector1 == "object" && typeof b == "number") {
+      const x = vector1.x * b;
+      const y = vector1.y * b;
+      return new Vector(x, y);
+    } else if (typeof vector1 == "object" && typeof b == "object") {
+      const x = vector1.x * b.x;
+      const y = vector1.y * b.y;
+      return new Vector(x, y);
+    }
+  }
+
+  /**
    * @static generates a vector that is created by linearly interpolating between two vectors. (0 is vector 1 and 1 is vector 2)
    * @param {Vector} vector1 - first vector
    * @param {Vector} vector2 - second vector

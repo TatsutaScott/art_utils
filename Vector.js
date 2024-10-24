@@ -141,6 +141,21 @@ class Vector {
 
     return Vector(x, y);
   }
+
+  /**
+   * Maps the vector between a lower boundary and and upper boundary
+   * @param {Vector} vector - vector to be mapped
+   * @param {Vector} inLo - lower input boundary
+   * @param {Vector} inHi - upper input boundary
+   * @param {Vector} outLo - lower output boundary
+   * @param {Vector} outHi - upper output boundary
+   * @returns {Vector} mapped Vector
+   */
+  static map(vector, inLo, inHi, outLo, outHi) {
+    const x = map(vector.x, inLo.x, inHi.x, outLo.x, outHi.x);
+    const y = map(vector.y, inLo.y, inHi.y, outLo.y, outHi.y);
+    return new Vector(x, y);
+  }
 }
 
 /**
@@ -320,6 +335,26 @@ Vector.prototype.limit = function (mag) {
     this.div(Math.sqrt(mSq)).mult(mag); //limit to the given magnitude
   }
   return this;
+};
+
+/**
+ * Maps the vector between a lower boundary and and upper boundary
+ * @param {Vector} inLo - lower input boundary
+ * @param {Vector} inHi - upper input boundary
+ * @param {Vector} outLo - lower output boundary
+ * @param {Vector} outHi - upper output boundary
+ * @returns {Vector} this
+ */
+Vector.prototype.map = function (inLo, inHi, outLo, outHi) {
+  this.x = map(this.x, inLo.x, inHi.x, outLo.x, outHi.x);
+  this.y = map(this.y, inLo.y, inHi.y, outLo.y, outHi.y);
+  return this;
+};
+
+/** Floors the x and y values */
+Vector.prototype.floor = function () {
+  this.x = Math.floor(this.x);
+  this.y = Math.floor(this.y);
 };
 
 /**

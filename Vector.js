@@ -358,6 +358,27 @@ Vector.prototype.floor = function () {
 };
 
 /**
+ * Tests a Vector to see if it is inside a given range
+ * @param {Number | Vector} a - Either the lower x bound or the lower bound vector
+ * @param {Number | Vector} b - Either the lower y bound or the lower bound vector
+ * @param {Number} c - upper x bound
+ * @param {Number} d - upper y bound
+ * @returns {boolean}
+ */
+Vector.prototype.inRange = function (a, b, c, d) {
+  if (arguments.length == 2 && typeof a == "object" && typeof b == "object") {
+    const xInRange = this.x > a.x && this.x < b.x;
+    const yInRange = this.y > a.y && this.y < b.y;
+    return xInRange && yInRange;
+  }
+  if (arguments.length == 4) {
+    const xInRange = this.x > a && this.x < c;
+    const yInRange = this.y > b && this.y < d;
+    return xInRange && yInRange;
+  }
+};
+
+/**
  * Scales a value between an input range and maps it to an output range
  * @param {number} n - number to be scaled
  * @param {number} inputLo - lower boundary for input range

@@ -11,3 +11,14 @@ export function dateString() {
 
   return date_string + "_" + time_string;
 }
+
+/**
+ * tests an array to see if every value inside the array is valid
+ * @param {Array} arr -array to be tested
+ * @returns {boolean}
+ */
+export function isValid(arr) {
+  return arr.every((v) => {
+    v != NaN && v != undefined && v != false && v != null;
+  });
+}

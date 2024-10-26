@@ -10,26 +10,24 @@ import { interp } from "./math_util.js";
  * @param {number} y2 Ending y value
  * @param {object} context Canvas context to draw to
  */
-
-function line(x1, y1, x2, y2, context) {
-  context.beginPath(); // Start a new path
-  context.moveTo(x1, y1); // Move the pen to (x1, y1)
-  context.lineTo(x2, y2); // Draw a line to (x2, y2)
-  context.stroke(); // Color in the stroke
+function line(x1, y1, x2, y2) {
+  const path = new Path2D(); // Start a new path
+  path.moveTo(x1, y1); // Move the pen to (x1, y1)
+  path.lineTo(x2, y2); // Draw a line to (x2, y2)
+  return path;
 }
 
 /**
  * Generates an ellipse shaped path
  * @param {Number} x - x position
  * @param {Number} y - y position
- * @param {Number} w - width 
+ * @param {Number} w - width
  * @param {Number} h - height
  * @param {Number} r - radius
  * @returns {Path2D} - path object representing an ellipse
  */
-
 function ellipse(x, y, w, h, r = 0) {
-  const path = new Path2D(); // inits the path object 
+  const path = new Path2D(); // inits the path object
   path.ellipse(x, y, w, h, r, 0, TAU); // adds an ellipse to the path
   return path;
 }
@@ -89,4 +87,29 @@ function star(x, y, w, h, points, o = 0.5, i_curv = 0, o_curv = 1) {
   return path;
 }
 
-export { line, star, ellipse };
+/**
+ * Generates an arc shaped path
+ * @param {Number} x - x position of arc center
+ * @param {Number} y - y position of arc center
+ * @param {Number} r - arc radius
+ * @param {Number} a - angle to start from in radians
+ * @param {Number} l - length of arc in radians
+ */
+function arc(x, y, r, a, l) {
+  const path = new Path2D();
+  path.arc(x, y, r, a, a + l);
+  return path;
+}
+
+/**
+ * Generates a point shaped path
+ * @param {Number} x - x position of the point
+ * @param {Number} y - y position of the point
+ */
+function point(x, y) {
+  const path = new Path2D();
+  path.rect(x - 0.25, y - 0.25, 0.5, 0.5);
+  return path;
+}
+
+export { line, star, ellipse, arc, point };

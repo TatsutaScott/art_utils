@@ -1,3 +1,6 @@
+import IMG from "./IMG";
+import Vector from "./Vector";
+
 class Canvas {
   constructor(DOM, width, height) {
     if (DOM.tagName == "CANVAS" || DOM instanceof OffscreenCanvas) {
@@ -9,10 +12,15 @@ class Canvas {
 
     this.canvas.width = this.width = width; //Sets canvas width
     this.canvas.height = this.height = height; //Sets canvas height
-
+    this.getCenter();
     this.ctx = this.canvas.getContext("2d"); //Gets the drawing context from the DOM element
   }
 }
+
+/**calculates the position of the center of the canvas*/
+Canvas.prototype.getCenter = function () {
+  this.center = { x: this.width / 2, y: this.height / 2 };
+};
 
 /** sets the dimensions of the canvas
  * @param {number} width - width value in pixels
@@ -83,6 +91,7 @@ Canvas.prototype.fullScreen = function () {
   this.canvas.style.top = 0;
   this.canvas.width = this.width = window.innerWidth;
   this.canvas.height = this.height = window.innerHeight;
+  this.getCenter();
 };
 
 /**
@@ -90,32 +99,39 @@ Canvas.prototype.fullScreen = function () {
  * @property {Number} pos - position of the color in the array (0 - 1)
  * @property {String} color - color of the stop in string form i.e. 'rgba(23, 50, 28, 0.4)'
  */
-
 /**
  * @typedef {Object} Gradient_settings
  * @property {Number} x0 - starting x-value for gradient
  * @property {Number} y0 - starting y-value for gradient
  * @property {Number} x1 - starting x-value for gradient
  * @property {Number} y1 - starting y-value for gradient
- * @property {Color_stop} colors - array of colors and positions in the gradient
+ * @property {Vector} start - starting position for gradient
+ * @property {Vector} end - ending position for gradient
+ * @property {[Color_stop]} colors - array of colors and positions in the gradient
  */
-
 /**function to generate a linear gradient
  * @param {Gradient_settings} settings - Defines the gradient, including information about start, stop, and colors
  * @returns {CanvasGradient} - object representing a gradient
  */
 Canvas.prototype.gradient = function (settings) {
-  const gradient = this.ctx.createLinearGradient(
-    settings.x0,
-    settings.y0,
-    settings.x1,
-    settings.y1
-  );
-
-  for (const c of settings.colors) {
-    console.log(c.color);
-    gradient.addColorStop(c.pos, c.color);
+  let gradient;
+  if (settings.start && settings.end) {
+    gradient = this.ctx.createLinearGradient(
+      settings.start.x,
+      settings.start.y,
+      settings.end.x,
+      settings.end.y
+    );
+  } else if (settings.x0 && settings.x1 && settings.y0 && settings.y1) {
+    gradient = this.ctx.createLinearGradient(
+      settings.x0,
+      settings.y0,
+      settings.x1,
+      settings.y1
+    );
   }
+
+  settings.colors.forEach((c) => gradient.addColorStop(c.pos, c.color));
 
   return gradient;
 };
@@ -152,7 +168,47 @@ Canvas.prototype.gradient = function (settings) {
  * @return {void}
  */
 Canvas.prototype.image = function (image, v1, v2, v3, v4, v5, v6, v7, v8) {
-  this.ctx.drawImage(image, v1, v2, v3, v4, v5, v6, v7, v8);
+  if (image instanceof IMG) {
+    image = image.image;
+  }
+  if (!(image instanceof Image)) return;
+  if (v8) {
+    this.ctx.drawImage(image, v1, v2, v3, v4, v5, v6, v7, v8);
+  } else if (v4) {
+    this.ctx.drawImage(image, v1, v2, v3, v4);
+  } else {
+    this.ctx.drawImage(image, v1, v2);
+  }
 };
 
+/**Returns the image data of the canvas
+ * @returns {ImageData} - ImageData from the canvas
+ */
+Canvas.prototype.getImage = function () {
+  const img_holder = document.createElement("canvas");
+  img_holder.width = this.width;
+  img_holder.height = this.height;
+  const context = img_holder.getContext("2d");
+  context.drawImage(this.canvas, 0, 0);
+  return img_holder;
+};
+
+/**Saves the state of the canvas transformations and colors */
+Canvas.prototype.save = function () {
+  this.ctx.save();
+};
+
+/**resets the state of the canvas transformations and colors */
+Canvas.prototype.restore = function () {
+  this.ctx.restore();
+};
+
+/**
+ * scales the canvas
+ * @param {Number} x  - x scale factor
+ * @param {Number} y  - y scale factor
+ */
+Canvas.prototype.scale = function (x, y) {
+  this.ctx.scale(x, y);
+};
 export default Canvas;

@@ -1,19 +1,21 @@
 import { map, limit } from "./math_util.js";
+import { random } from "./random_util.js";
 import Color from "./Color.js";
 
 class CubeHelix {
   constructor(start, rot, hue, gamma) {
-    this.start = map(start, 0, 1, 0, 3);
-    this.rotation = map(rot, 0, 1, -1.5, 1.5);
-    this.hue = map(hue, 0, 1, 0, 4);
-    this.gamma = map(gamma, 0, 1, 0.6, 1.4);
+    this.start = start; // 0 <-> 3
+    this.rotation = rot; // -1.5 <-> 1.5
+    this.hue = hue; // 0 <-> 4
+    this.gamma = gamma; // 0.6 <-> 1.4
+    this.print();
   }
 
   static random() {
-    const start = Math.random();
-    const rot = Math.random();
-    const hue = Math.random();
-    const gamma = Math.random();
+    const start = random(0, 3);
+    const rot = random(-1.5, 1.5);
+    const hue = random(0, 4);
+    const gamma = random(0.6, 1.4);
 
     return new CubeHelix(start, rot, hue, gamma);
   }
@@ -47,4 +49,13 @@ CubeHelix.prototype.palette = function (divisions) {
   return palette;
 };
 
+CubeHelix.prototype.print = function () {
+  console.log(
+    `Cube Helix: 
+    start: ${this.start}
+    rotation: ${this.rotation}
+    hue: ${this.hue}
+    gamma: ${this.gamma}`
+  );
+};
 export default CubeHelix;

@@ -1,5 +1,5 @@
-import IMG from "./IMG";
-import Vector from "./Vector";
+// import IMG from "./IMG.js";
+import Vector from "./Vector.js";
 
 class Canvas {
   constructor(DOM, width, height) {

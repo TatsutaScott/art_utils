@@ -38,6 +38,13 @@ CubeHelix.prototype.get = function (n) {
   return new Color(r, g, b);
 };
 
-CubeHelix.prototype.palette = function (divisions) {};
+CubeHelix.prototype.palette = function (divisions) {
+  const palette = [];
+  for (let i = 0; i <= divisions - 1; i++) {
+    const clr = this.get(i / divisions);
+    palette.push(clr);
+  }
+  return palette;
+};
 
 export default CubeHelix;

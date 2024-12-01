@@ -34,17 +34,24 @@ function createSlider(name, min, max, value, step, func) {
   slider.type = "range";
   slider.min = min;
   slider.max = max;
-  slider.value = value;
   slider.step = step;
+  slider.value = value;
+
+  // Create the span that shows the slider value
+  const value_span = document.createElement("span");
+  value_span.textContent = slider.value;
+  value_span.classList.add("sliderValue");
 
   // Handle slider change event
   slider.addEventListener("input", (event) => {
     func(event.target.value);
+    value_span.textContent = event.target.value;
   });
 
   // Append label and slider to the wrapper
   container.appendChild(label);
   container.appendChild(slider);
+  container.appendChild(value_span);
 
   return container;
 }

@@ -1,4 +1,4 @@
-import Vec from "./Vector";
+import Vec from "../Vector";
 
 function vLine(vectors, context) {
   context.beginPath();

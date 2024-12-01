@@ -1,7 +1,7 @@
-import Canvas from "../Canvas.js";
-import CubeHelix from "../CubeHelix.js";
-import { rect } from "../shape_util.js";
-import { createSlider } from "../DOM_util.js";
+import Canvas from "../class/Canvas.js";
+import CubeHelix from "../class/CubeHelix.js";
+import { rect } from "../function/shape_util.js";
+import { createSlider } from "../function/DOM_util.js";
 
 const c = new Canvas(document.body, 400, 400);
 const helix = CubeHelix.random();
@@ -14,6 +14,7 @@ document.body.appendChild(
     draw(6);
   })
 );
+console.log(helix.rotation);
 document.body.appendChild(
   createSlider("rotations", -1.5, 1.5, helix.rotation, 0.05, (val) => {
     helix.rotation = val;

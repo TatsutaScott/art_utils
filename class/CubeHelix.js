@@ -1,5 +1,5 @@
-import { limit } from "./math_util.js";
-import { random } from "./random_util.js";
+import { limit } from "../function/math_util.js";
+import { random } from "../function/random_util.js";
 import Color from "./Color.js";
 
 /**

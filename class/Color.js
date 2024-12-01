@@ -1,4 +1,4 @@
-import { map } from "./math_util.js";
+import { map } from "../function/math_util.js";
 
 /** class representing a color */
 export default class Color {

@@ -18,6 +18,27 @@ function line(x1, y1, x2, y2) {
 }
 
 /**
+ * Makes a rectangle path, with optional rounded corners.
+ *
+ * @param {Number} x - x position
+ * @param {Number} y - y position
+ * @param {Number} w - width
+ * @param {Number} h - height
+ * @param {number | [number]} radius - radius for all corners, or an array representing each corner
+ * @returns
+ */
+function rect(x, y, w, h, radius) {
+  const path = new Path2D();
+  if (radius) {
+    path.roundRect(x, y, w, h, radius);
+  } else {
+    path.rect(x, y, w, h);
+  }
+
+  return path;
+}
+
+/**
  * Generates an ellipse shaped path
  * @param {Number} x - x position
  * @param {Number} y - y position
@@ -112,4 +133,4 @@ function point(x, y) {
   return path;
 }
 
-export { line, star, ellipse, arc, point };
+export { line, star, ellipse, arc, point, rect };
